@@ -21,19 +21,19 @@ export class Collection {
         reqOpts.params = reqOpts.params.set(k, params[k]);
       }
     }
-    return this.http.get<any>(this.url + '/' + this.endpoint, reqOpts).share();
+    return this.http.get(this.url + '/' + this.endpoint, reqOpts);
   }
 
-  getById(id:string){
-
+  get(id:string,reqOpts?: any){
+    return this.http.get(this.url + '/' + this.endpoint + '/' + id, reqOpts);
   }
 
   save(item: any,reqOpts?: any) {
-    return this.http.post(this.url + '/' + this.endpoint, item, reqOpts).share();
+    return this.http.post(this.url + '/' + this.endpoint, item, reqOpts);
   }
 
-  remove(item: any,reqOpts?: any) {
-    return this.http.delete(this.url + '/' + this.endpoint, reqOpts);
+  remove(id: string,reqOpts?: any) {
+    return this.http.delete(this.url + '/' + this.endpoint + "/" + id, reqOpts);
   }
 
 }
