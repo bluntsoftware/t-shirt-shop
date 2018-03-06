@@ -18,9 +18,14 @@ export class Collection {
     if (params) {
       reqOpts.params = new HttpParams();
       for (let k in params) {
-        reqOpts.params = reqOpts.params.set(k, params[k]);
+        let val = params[k];
+        if(val instanceof Object){
+          val = JSON.stringify(val);
+        }
+        reqOpts.params = reqOpts.params.set(k, val);
       }
     }
+
     return this.http.get(this.url + '/' + this.endpoint, reqOpts);
   }
 

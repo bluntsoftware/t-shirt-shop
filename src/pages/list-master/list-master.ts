@@ -25,6 +25,14 @@ export class ListMasterPage {
       this.currentItems = resp['rows'];
     });
   }
+  getItems(ev) {
+    let val = ev.target.value;
+    let listParams = {rows:12,page:1,defaultsearchoper:"icn"};
+    listParams['filterByFields'] =  {'name':{'$regex' : '^'+val, '$options' : 'i'}};//starts with incase sensitive
+    this.collection.query(listParams).subscribe((resp) => {
+      this.currentItems = resp['rows'];
+    });
+  }
   /**
    * The view loaded, let's query our items for the list
    */
@@ -38,7 +46,6 @@ export class ListMasterPage {
   addItem() {
     let addModal = this.modalCtrl.create('ItemCreatePage');
     addModal.onDidDismiss(item => {
-      console.log(item);
       if (item) {
         this.collection.save(item).subscribe((resp) => {
            this.list();
