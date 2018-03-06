@@ -41,6 +41,7 @@ export class User {
       if (res.status == 'success') {
         this._loggedIn(res);
       } else {
+        console.log(res);
       }
     }, err => {
       console.error('ERROR', err);

@@ -2,7 +2,10 @@ import { Component } from '@angular/core';
 import { IonicPage, ModalController, NavController } from 'ionic-angular';
 
 import { Item } from '../../models/item';
-import { Items } from '../../providers/providers';
+import {Collection} from "../../providers/collection/collection";
+import {CollectionFactory} from "../../providers/collection/collection_factory";
+import {MainPage} from "../pages";
+
 
 @IonicPage()
 @Component({
@@ -10,12 +13,18 @@ import { Items } from '../../providers/providers';
   templateUrl: 'list-master.html'
 })
 export class ListMasterPage {
-  currentItems: Item[];
+  collection: Collection;
+  currentItems:any[];
 
-  constructor(public navCtrl: NavController, public items: Items, public modalCtrl: ModalController) {
-    this.currentItems = this.items.query();
+  constructor(public navCtrl: NavController, public collection_factory: CollectionFactory, public modalCtrl: ModalController) {
+    this.collection = this.collection_factory.collection("items");
+    this.list();
   }
-
+  list(){
+    this.collection.query().subscribe((resp) => {
+      this.currentItems = resp['rows'];
+    });
+  }
   /**
    * The view loaded, let's query our items for the list
    */
@@ -29,10 +38,13 @@ export class ListMasterPage {
   addItem() {
     let addModal = this.modalCtrl.create('ItemCreatePage');
     addModal.onDidDismiss(item => {
+      console.log(item);
       if (item) {
-        this.items.add(item);
+        this.collection.save(item).subscribe((resp) => {
+           this.list();
+        });
       }
-    })
+    });
     addModal.present();
   }
 
@@ -40,7 +52,7 @@ export class ListMasterPage {
    * Delete an item from the list of items.
    */
   deleteItem(item) {
-    this.items.delete(item);
+    this.collection.remove(item);
   }
 
   /**
