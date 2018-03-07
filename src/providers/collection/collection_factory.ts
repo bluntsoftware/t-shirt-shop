@@ -4,7 +4,7 @@ import {HttpClient} from "@angular/common/http";
 
 @Injectable()
 export class CollectionFactory {
-  url: string = 'http://localhost/glue/conduit/rest';
+  url: string = 'http://jerb.bluntsoftware.com/FilesRUS/conduit/rest';
   collections = new Map<string, Collection>();
 
   constructor(public http: HttpClient){
