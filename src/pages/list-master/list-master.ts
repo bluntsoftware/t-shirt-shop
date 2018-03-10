@@ -2,9 +2,11 @@ import { Component } from '@angular/core';
 import { IonicPage, ModalController, NavController } from 'ionic-angular';
 
 import { Item } from '../../models/item';
-import {Collection} from "../../providers/collection/collection";
-import {CollectionFactory} from "../../providers/collection/collection_factory";
+
 import {MainPage} from "../pages";
+
+import {Shop} from "../../providers/shop/shop-service";
+import {Collection} from "../../providers/api/conduit-service";
 
 
 @IonicPage()
@@ -16,8 +18,8 @@ export class ListMasterPage {
   collection: Collection;
   currentItems:any[];
 
-  constructor(public navCtrl: NavController, public collection_factory: CollectionFactory, public modalCtrl: ModalController) {
-    this.collection = this.collection_factory.collection("items");
+  constructor(public navCtrl: NavController, public shop: Shop, public modalCtrl: ModalController) {
+    this.collection = this.shop.collection("items");
     this.list();
   }
   list(){
