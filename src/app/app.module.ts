@@ -12,7 +12,7 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 
 import { MyApp } from './app.component';
 import {Shop} from "../providers/shop/shop-service";
-import {Items} from "../mocks/providers/items";
+
 
 
 // The translate loader needs to know where to load i18n files
@@ -28,7 +28,6 @@ export function provideSettings(storage: Storage) {
    * You can add new settings options at any time. Once the settings are saved,
    * these values will not overwrite the saved values (this can be done manually if desired).
    */
-
 }
 
 @NgModule({
@@ -54,7 +53,6 @@ export function provideSettings(storage: Storage) {
   ],
   providers: [
     Shop,
-    Items,
     Camera,
     SplashScreen,
     StatusBar,

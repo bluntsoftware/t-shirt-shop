@@ -12,4 +12,11 @@ export class Shop extends ConduitService{
     this.client.categories = this.collection('category');
     this.client.tags = this.collection('tags');
   }
+
+  defaultItem: any = {
+    "name": "Burt Bear",
+    "profilePic": "assets/img/speakers/bear.jpg",
+    "about": "Burt is a Bear.",
+  };
+
 }
