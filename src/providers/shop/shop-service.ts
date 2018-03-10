@@ -4,7 +4,7 @@ import {ConduitService} from "../api/conduit-service";
 
 @Injectable()
 export class Shop extends ConduitService{
-  url: string = 'http://jerb.bluntsoftware.com/FilesRUS';
+  url: string = 'http://localhost/glue';
   constructor(public http: HttpClient){
     super(http);
     this.client.carts = this.collection('cart');

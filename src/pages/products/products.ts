@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {NavController, NavParams, AlertController, ModalController} from 'ionic-angular';
+import {NavController, NavParams, AlertController, ModalController, IonicPage} from 'ionic-angular';
 
 import { ItemPage } from '../item/item';
 import { CartPage } from '../cart/cart';
@@ -13,11 +13,10 @@ import {Shop} from "../../providers/shop/shop-service";
   See http://ionicframework.com/docs/v2/components/#navigation for more info on
   Ionic pages and navigation.
 */
+@IonicPage()
 @Component({
   selector: 'page-products',
-  templateUrl: 'products.html',
-  providers: [],
-  entryComponents: [ItemPage]
+  templateUrl: 'products.html'
 })
 export class ProductsPage {
 
@@ -30,15 +29,17 @@ export class ProductsPage {
       private alertCtrl: AlertController,
       public modalCtrl: ModalController) {
 
-    this.list();
+      this.list();
 
+  }
+  ionViewDidLoad() {
   }
   list(){
     var promise:any;
     if (this.navParams.get('query')){
-      promise = this.shop.client.products.list(this.navParams.get('query'));
+      promise = this.shop.client.products.query(this.navParams.get('query')).toPromise();
     } else {
-      promise = this.shop.client.products.list();
+      promise = this.shop.client.products.query().toPromise();
     }
 
     promise
@@ -55,6 +56,14 @@ export class ProductsPage {
 
         alert.present();
       })
+  }
+  getItems(ev) {
+    let val = ev.target.value;
+    let listParams = {rows:12,page:1,defaultsearchoper:"icn"};
+    listParams['filterByFields'] =  {'name':{'$regex' : '^'+val, '$options' : 'i'}};//starts with incase sensitive
+    this.shop.client.products.query(listParams).subscribe((resp) => {
+      this.products = resp['rows'];
+    });
   }
   addProduct() {
     let addModal = this.modalCtrl.create('ProductCreatePage');

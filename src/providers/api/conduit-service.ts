@@ -15,9 +15,9 @@ export class ConduitService {
   login(accountInfo: any) {
     let seq = this.http.post(this.url +'/app/authentication/login', accountInfo).share();
     seq.subscribe((res: any) => {
-
+        console.log(res);
     }, err => {
-      console.error('ERROR', err);
+        console.error('ERROR', err);
     });
     return seq;
   };
