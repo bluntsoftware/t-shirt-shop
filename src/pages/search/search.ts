@@ -4,7 +4,6 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Item } from '../../models/item';
 import {Shop} from "../../providers/shop/shop-service";
 
-
 @IonicPage()
 @Component({
   selector: 'page-search',
