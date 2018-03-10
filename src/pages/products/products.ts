@@ -59,8 +59,8 @@ export class ProductsPage {
   }
   getItems(ev) {
     let val = ev.target.value;
-    let listParams = {rows:12,page:1,defaultsearchoper:"icn"};
-    listParams['filterByFields'] =  {'name':{'$regex' : '^'+val, '$options' : 'i'}};//starts with incase sensitive
+    let listParams = {rows:75,page:1,defaultsearchoper:"icn"};
+    listParams['filterByFields'] =  {'name':{'$regex' :  val, '$options' : 'i'}};//starts with incase sensitive
     this.shop.client.products.query(listParams).subscribe((resp) => {
       this.products = resp['rows'];
     });

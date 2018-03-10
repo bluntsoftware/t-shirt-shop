@@ -26,10 +26,7 @@
       <img *ngIf="product.images" src="{{product.images[0]}}">
     </ion-avatar>
     <h2>{{product.name}}</h2>
-    <div [ngSwitch]="product?.price_discount">
-    <p *ngSwitchCase="true">$ <span st>{{product.price}}</span> <span>{{product.price_discount}}</span></p>
-    <p *ngSwitchDefault>€ <span style="text-decoration: line-through;">{{product.price}}</span> <span>{{product.price_discount}}</span></p>
-    </div>
+    <p><span>{{product.price}}</span></p>
   </ion-item>
 </ion-list>
 
