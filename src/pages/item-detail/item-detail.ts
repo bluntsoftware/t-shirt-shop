@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import {Shop} from "../../providers/shop/shop-service";
+import {Conduit} from "@bluntsoftware/iglue";
+
 
 
 @IonicPage()
@@ -11,8 +12,8 @@ import {Shop} from "../../providers/shop/shop-service";
 export class ItemDetailPage {
   item: any;
 
-  constructor(public navCtrl: NavController, navParams: NavParams, shop: Shop) {
-    this.item = navParams.get('item') || shop.defaultItem;
+  constructor(public navCtrl: NavController, navParams: NavParams, conduit: Conduit) {
+    this.item = navParams.get('item') || {};
   }
 
 }

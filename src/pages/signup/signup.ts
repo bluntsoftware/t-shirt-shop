@@ -4,7 +4,8 @@ import { IonicPage, NavController, ToastController } from 'ionic-angular';
 
 
 import { MainPage } from '../pages';
-import {Shop} from "../../providers/shop/shop-service";
+import {IGlue} from "@bluntsoftware/iglue";
+
 
 @IonicPage()
 @Component({
@@ -25,7 +26,7 @@ export class SignupPage {
   private signupErrorString: string;
 
   constructor(public navCtrl: NavController,
-    public shop: Shop,
+    public iglue: IGlue,
     public toastCtrl: ToastController,
     public translateService: TranslateService) {
 
@@ -35,8 +36,8 @@ export class SignupPage {
   }
 
   doSignup() {
-    // Attempt to login in through our User service
-    this.shop.signup(this.account).subscribe((resp) => {
+
+    this.iglue.user().register(this.account).then((resp) => {
       this.navCtrl.push(MainPage);
     }, (err) => {
 

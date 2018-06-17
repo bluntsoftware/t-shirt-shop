@@ -8,10 +8,10 @@ import { IonicStorageModule, Storage } from '@ionic/storage';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
-
+import {IGlueClientModule,IGlueConfig} from "@bluntsoftware/iglue";
 
 import { MyApp } from './app.component';
-import {Shop} from "../providers/shop/shop-service";
+
 
 
 
@@ -37,6 +37,7 @@ export function provideSettings(storage: Storage) {
   imports: [
     BrowserModule,
     HttpClientModule,
+    IGlueClientModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -52,7 +53,7 @@ export function provideSettings(storage: Storage) {
     MyApp
   ],
   providers: [
-    Shop,
+    {provide: IGlueConfig,  useValue: new IGlueConfig('http://jerb.bluntsoftware.com/FilesRUS')},
     Camera,
     SplashScreen,
     StatusBar,

@@ -4,7 +4,8 @@ import { OrderCompleteModalPage } from '../order-complete-modal/order-complete-m
 
 import { ModalController } from 'ionic-angular';
 import { LoadingController } from 'ionic-angular';
-import {Shop} from "../../providers/shop/shop-service";
+import {Conduit} from "@bluntsoftware/iglue";
+
 
 
 /**
@@ -36,7 +37,7 @@ export class CheckoutPage {
     public navParams: NavParams,
     //private braintreeClient: BraintreeProvider,
     public alertCtrl  :AlertController,
-    public shop: Shop) {
+    public conduit: Conduit) {
 
     // Initial step counter
     this.step = 0;
@@ -60,7 +61,7 @@ export class CheckoutPage {
 
 
     let cart_id = localStorage.getItem('cart_id');
-    this.shop.client.carts.getById(cart_id)
+    this.conduit.collection("cart").getById(cart_id)
     .then((response) => {
       this.cart = response;
     })
@@ -196,7 +197,7 @@ export class CheckoutPage {
 
         loading.present();
         let cart_id = localStorage.getItem('cart_id');
-        return this.shop.client.orders.create({
+        return this.conduit.collection("order").save({
           shipping_address : this.address,
           billing_address : this.address,
           cart_id :  cart_id

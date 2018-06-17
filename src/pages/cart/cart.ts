@@ -4,7 +4,7 @@ import { NavController, NavParams,AlertController  } from 'ionic-angular';
 
 
 import {CheckoutPage} from '../checkout/checkout';
-import {Shop} from "../../providers/shop/shop-service";
+import {Conduit} from "@bluntsoftware/iglue";
  /*
   Generated class for the Cart page.
 
@@ -20,18 +20,18 @@ export class CartPage {
   constructor(	public navCtrl: NavController,
   				public navParams: NavParams,
   				public alertCtrl: AlertController,
-  				public shop: Shop) {
+  				public conduit: Conduit) {
   }
 
   ionViewDidLoad() {
     let cart_id = localStorage.getItem('cart_id');
     if(!cart_id){
-      this.shop.client.carts.save(this.cart).toPromise().then((response)=>{
+      this.conduit.collection("cart").save(this.cart).toPromise().then((response)=>{
         this.cart = response;
          localStorage.setItem('cart_id',response._id);
       });
     }else{
-      this.shop.client.carts.getById(cart_id)
+      this.conduit.collection("cart").getById(cart_id)
         .then((response) => {
           this.cart = response;
         })
@@ -52,7 +52,7 @@ export class CartPage {
   	} else if (this.cart.items[index].quantity + amount === 0) {
       this.cart.items.splice(index,1);
   	}
-    this.shop.client.carts.save(this.cart).toPromise().then((response)=>{
+    this.conduit.collection("cart").save(this.cart).toPromise().then((response)=>{
 
     });
   }

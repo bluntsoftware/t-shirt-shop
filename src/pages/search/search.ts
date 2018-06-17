@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
+import {Conduit} from "@bluntsoftware/iglue";
 import { Item } from '../../models/item';
-import {Shop} from "../../providers/shop/shop-service";
+
 
 @IonicPage()
 @Component({
@@ -13,7 +13,7 @@ export class SearchPage {
 
   currentItems: any = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public shop: Shop) { }
+  constructor(public navCtrl: NavController, public navParams: NavParams, public conduit: Conduit) { }
 
   /**
    * Perform a service for the proper items.
@@ -24,7 +24,7 @@ export class SearchPage {
       this.currentItems = [];
       return;
     }
-    this.currentItems = this.shop.collection('items').query({
+    this.currentItems = this.conduit.collection('items').query({
       name: val
     });
   }

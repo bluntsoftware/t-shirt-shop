@@ -4,9 +4,9 @@ import { IonicPage, ModalController, NavController } from 'ionic-angular';
 import { Item } from '../../models/item';
 
 import {MainPage} from "../pages";
+import {Collection, Conduit} from "@bluntsoftware/iglue";
 
-import {Shop} from "../../providers/shop/shop-service";
-import {Collection} from "../../providers/api/conduit-service";
+
 
 
 @IonicPage()
@@ -18,8 +18,8 @@ export class ListMasterPage {
   collection: Collection;
   currentItems:any[];
 
-  constructor(public navCtrl: NavController, public shop: Shop, public modalCtrl: ModalController) {
-    this.collection = this.shop.collection("items");
+  constructor(public navCtrl: NavController, public conduit: Conduit, public modalCtrl: ModalController) {
+    this.collection = this.conduit.collection("items");
     this.list();
   }
   list(){

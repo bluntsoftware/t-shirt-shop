@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, LoadingController, AlertController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
-import {Shop} from "../../providers/shop/shop-service";
+import {Conduit} from "@bluntsoftware/iglue";
+
 
 /*
   Generated class for the Item page.
@@ -22,7 +23,7 @@ export class ItemPage {
                 public navParams: NavParams,
                 public loadingCtrl: LoadingController,
                 public alertCtrl: AlertController,
-                private shop: Shop,
+                private conduit: Conduit,
                 public storage: Storage) {
 
 
@@ -53,18 +54,18 @@ export class ItemPage {
     if(!cart_id){
       let cart = {'items':[]};
       cart['items'].push(line_item);
-      this.shop.client.carts.save(cart).toPromise().then((response)=>{
+      this.conduit.collection("cart").save(cart).toPromise().then((response)=>{
         localStorage.setItem('cart_id', response._id);
         loading.dismiss();
       })
     }else{
-      this.shop.client.carts.getById(cart_id)
+      this.conduit.collection("cart").getById(cart_id)
         .then((cart) => {
           if(!cart['items']){
             cart['items'] = [];
           }
           cart['items'].push(line_item);
-          this.shop.client.carts.save(cart).toPromise().then((response)=>{
+          this.conduit.collection("cart").save(cart).toPromise().then((response)=>{
             loading.dismiss();
             let alert = this.alertCtrl.create({
               title: 'Added to cart!',

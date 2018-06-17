@@ -5,7 +5,7 @@ import { ItemPage } from '../item/item';
 import { CartPage } from '../cart/cart';
 
 import {ProductCreatePage} from "../product-create/product-create";
-import {Shop} from "../../providers/shop/shop-service";
+import {Conduit} from "@bluntsoftware/iglue";
 
 /*
   Generated class for the Products page.
@@ -25,7 +25,7 @@ export class ProductsPage {
   constructor(
       public navCtrl: NavController,
       public navParams: NavParams,
-      private shop: Shop,
+      private conduit: Conduit,
       private alertCtrl: AlertController,
       public modalCtrl: ModalController) {
 
@@ -35,13 +35,12 @@ export class ProductsPage {
   ionViewDidLoad() {
   }
   list(){
-    var promise:any;
+    let promise:any;
     if (this.navParams.get('query')){
-      promise = this.shop.client.products.query(this.navParams.get('query')).toPromise();
+      promise = this.conduit.collection("product").query(this.navParams.get('query')).toPromise();
     } else {
-      promise = this.shop.client.products.query().toPromise();
+      promise = this.conduit.collection("product").query().toPromise();
     }
-
     promise
       .then((response) => {
         console.log(response);
@@ -61,7 +60,7 @@ export class ProductsPage {
     let val = ev.target.value;
     let listParams = {rows:75,page:1,defaultsearchoper:"icn"};
     listParams['filterByFields'] =  {'name':{'$regex' :  val, '$options' : 'i'}};//starts with incase sensitive
-    this.shop.client.products.query(listParams).subscribe((resp) => {
+    this.conduit.collection("product").query(listParams).subscribe((resp) => {
       this.products = resp['rows'];
     });
   }
@@ -69,7 +68,7 @@ export class ProductsPage {
     let addModal = this.modalCtrl.create('ProductCreatePage');
     addModal.onDidDismiss(item => {
       if (item) {
-        this.shop.client.products.save(item).subscribe((resp) => {
+        this.conduit.collection("product").save(item).subscribe((resp) => {
           this.list();
         });
       }
